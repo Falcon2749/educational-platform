@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduRegister</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet"
+          crossorigin="anonymous" />
+</head>
+<body>
+<div class="registration">
+    <form name="registration" id="new_user" action="/registration" method="post" modelAtribute="newUser">
+        <div class="form-group">
+            <labeL for="firstName">Ім’я </labeL>
+            <input class="form-control" name="firstName" id="firstName" type="text" placeholder="Іван">
+        </div>
+        <div class="form-group">
+            <labeL for="lastName">Прізвище </labeL>
+            <input class="form-control" name="lastName" id="lastName" type="text" placeholder="Петренко">
+        </div>
+        <div class="form-group">
+            <labeL for="email">Email </labeL>
+            <input class="form-control" name="email" id="email" type="email" placeholder="ivan@gmail.com">
+        </div>
+        <div class="form-group">
+            <labeL for="password">Пароль</labeL>
+            <input class="form-control" name="password" id="password"
+                   type="password" placeholder="Щось дуже складне">
+        </div>
+        <div class="form-group">
+            <labeL for="repeat-password">Повторіть пароль</labeL>
+            <input class="form-control" name="password" id="repeat-password"
+                   type="password" placeholder="Повторити щось дуже складне">
+        </div>
+        <input type="submit" value="Зареєструватися" class="btn btn-primary">
+    </form>
+</div>
+
+</body>
+<style>
+    body{ margin: 20px;}
+
+    #new_user input:not([type="submit"]){
+        display: block;
+        font-size:18px;
+        padding:10px 8px;
+        border:solid 1px #aacfe4;
+        width: 350px;
+        margin:2px 0 20px 0;
+    }
+
+    .registration{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+</style>
+<script>
+    let form = document.getElementById("new_user");
+
+    form.onsubmit = function (event) {
+        event.preventDefault();
+        let formData = JSON.stringify({
+            "name": document.getElementById("firstName").value,
+            "surname": document.getElementById("lastName").value,
+            "email": document.getElementById("email").value,
+            "password": document.getElementById("password").value,
+        });
+        postUserData(formData);
+        console.log(formData);
+    }
+
+    async function postUserData(formData){
+        try {
+            const response = await fetch('/registration', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            console.log('Success:', JSON.stringify(result));
+            console.log("Success");
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+</script>
+</html>
