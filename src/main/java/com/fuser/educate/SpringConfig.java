@@ -1,4 +1,4 @@
-package com.fuser.educate.config;
+package com.fuser.educate;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

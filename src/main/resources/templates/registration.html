@@ -32,6 +32,7 @@
             <input class="form-control" name="password" id="repeat-password"
                    type="password" placeholder="Повторити щось дуже складне">
         </div>
+        <p id="messageBlock" class="alert hidden"></p>
         <input type="submit" value="Зареєструватися" class="btn btn-primary">
     </form>
 </div>
@@ -56,6 +57,10 @@
         height: 100%;
     }
 
+    .hidden{
+        display: none;
+    }
+
 </style>
 <script>
     let form = document.getElementById("new_user");
@@ -76,11 +81,25 @@
         try {
             const response = await fetch('/registration', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            response.text().then(function (text) {
+                console.log(text)
+                var messageBlock = document.getElementById("messageBlock");
+                messageBlock.innerHTML = text;
+                console.log(text == "Успішно зареєстровано");
+                if (text == "Успішно зареєстровано"){
+                    messageBlock.classList.add("alert-success");
+                } else {
+                    messageBlock.classList.add("alert-danger");
+                }
+                messageBlock.classList.remove("hidden");
             });
-            const result = await response.json();
-            console.log('Success:', JSON.stringify(result));
-            console.log("Success");
+
+
         } catch (error) {
             console.error('Error:', error);
         }
