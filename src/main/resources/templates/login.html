@@ -20,7 +20,8 @@
 <div class="container">
     <form class="form-signin" method="post" action="/login">
         <h2 class="form-signin-heading">Авторизація</h2>
-        <p th:if="${param.badCredentials}" class="alert alert-danger">Неправильний логін або пароль</p>
+        <p th:if="${param.badCredentials}" class="alert alert-danger">Неправильний логін або пароль :(</p>
+        <p th:if="${param.logout}" class="alert alert-success">Ви успішно вийшли з профілю :D</p>
         <p class="form-group">
             <label for="username" class="sr-only">Email</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="Email" required autofocus>
@@ -38,13 +39,4 @@
     </form>
 </div>
 </body>
-<script>
-    let url_string = window.location.href;
-    let url = new URL(url_string);
-    let c = url.searchParams.get("justRegister");
-    console.log(c);
-    if (c === "true"){
-        alert("You are successfully registered. Now, you can login");
-    }
-</script>
 </html>

@@ -1,0 +1,19 @@
+#new_user input:not([type="submit"]){
+    display: block;
+    font-size:18px;
+    padding:10px 8px;
+    border:solid 1px #aacfe4;
+    width: 350px;
+    margin:2px 0 20px 0;
+}
+
+.registration{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.hidden{
+    display: none;
+}
