@@ -27,7 +27,7 @@ public class AuthController {
 
     @GetMapping("/registration")
     public String getRegistration(){
-        return "/registration";
+        return "registration";
     }
 
     @PostMapping("/registration")
