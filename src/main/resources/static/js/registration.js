@@ -8,32 +8,38 @@ form.onsubmit = function (event) {
         "email": document.getElementById("email").value,
         "password": document.getElementById("password").value,
     });
+
     postUserData(formData);
-    console.log(formData);
 }
 
-async function postUserData(formData){
+async function postUserData(formData) {
     try {
-        const response = await fetch('/registration', {
+        await fetch(URL + '/registration', {
             method: 'POST',
             body: formData,
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        response.text().then(function (text) {
-            console.log(text)
-            var messageBlock = document.getElementById("messageBlock");
-            messageBlock.innerHTML = text;
-            console.log(text == "Успішно зареєстровано");
-            if (text == "Успішно зареєстровано"){
-                messageBlock.classList.remove("alert-danger");
-                messageBlock.classList.add("alert-success");
-            } else {
-                messageBlock.classList.add("alert-danger");
-            }
-            messageBlock.classList.remove("hidden");
-        });
+            .then(response => {
+                console.log(response.status);
+                var messageBlock = document.getElementById("messageBlock");
+
+                if (response.status === 201) {
+                    messageBlock.classList.remove("alert-danger");
+                    messageBlock.classList.add("alert-success");
+                    messageBlock.innerHTML = "Успішно зареєстровано. <a href='" + LOGIN_URL + "'>Авторизуватися</a>"
+                } else if (response.status === 409) {
+                    messageBlock.classList.remove("alert-success");
+                    messageBlock.classList.add("alert-danger");
+                    messageBlock.innerHTML = "Користувач з даним email вже існує";
+                } else {
+                    messageBlock.classList.remove("alert-success");
+                    messageBlock.classList.add("alert-danger");
+                    messageBlock.innerHTML = "Помилка реєстрації. Error Code - " + response.status;
+                }
+                messageBlock.classList.remove("hidden");
+            });
 
 
     } catch (error) {

@@ -10,7 +10,7 @@ async function getUserInfo() {
             return;
         }
 
-        await fetch("/learn/profile.json", {
+        await fetch(URL + "/learn/profile.json", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
