@@ -3,6 +3,7 @@ package com.fuser.educate.domain.enums;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,10 +22,13 @@ public enum MainUserRole {
     }
 
     public Set<SimpleGrantedAuthority> getGrantedAuthority(){
-        Set<SimpleGrantedAuthority> permissions = getUserPermissions().stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
-                .collect(Collectors.toSet());
-        permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
-        return permissions;
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        this.getUserPermissions()
+                .forEach(mainUserPermissions -> {
+                    authorities.add(
+                            new SimpleGrantedAuthority(mainUserPermissions.getPermission()
+                            ));
+                });
+        return authorities;
     }
 }

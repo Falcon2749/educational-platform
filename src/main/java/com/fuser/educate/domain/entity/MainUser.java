@@ -52,8 +52,9 @@ public class MainUser extends IdHolder implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("ROLE_" + this.role.name());
-        return Set.of(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
+        System.out.println(this.role.getGrantedAuthority());
+        return this.role
+                .getGrantedAuthority();
     }
 
     @Override
