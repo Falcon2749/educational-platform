@@ -4,9 +4,11 @@
     <title>EduProfile</title>
 </head>
 <body>
-<h2>Профіль</h2>
+<h2 id="name"></h2>
+<span id="ecoin"></span><br>
+<span id="xp"></span><br>
 
-<a href="/perform_logout">Вийти</a><br><br>
+<a href="/perform_logout" onclick="logOut()">Вийти</a><br><br>
 
 <a href="/learn/course-#1"><div>Курс #1</div></a>
 <a href="/learn/course-#2"><div>Курс #2</div></a>
@@ -17,4 +19,5 @@
 <style>
     body{ margin: 20px;}
 </style>
+<script th:src="@{/js/profile.js}"></script>
 </html>

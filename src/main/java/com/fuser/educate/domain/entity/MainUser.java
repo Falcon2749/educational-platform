@@ -1,14 +1,21 @@
 package com.fuser.educate.domain.entity;
 
+import com.fuser.educate.domain.enums.MainUserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.Set;
+
+import static com.fuser.educate.domain.enums.MainUserRole.STUDENT;
 
 @Entity
 @Table(name = "user")
@@ -22,10 +29,12 @@ public class MainUser extends IdHolder implements UserDetails {
     private String email;
     private String password;
 
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
+    @Enumerated(EnumType.STRING)
+    private MainUserRole role = STUDENT;
+    private boolean isAccountNonExpired = true;
+    private boolean isAccountNonLocked = true;
+    private boolean isCredentialsNonExpired = true;
+    private boolean isEnabled = true;
 
     private Integer ecoin = 100;
     private Integer xp = 0;
@@ -34,24 +43,17 @@ public class MainUser extends IdHolder implements UserDetails {
     public MainUser(String name,
                     String surname,
                     String email,
-                    String password,
-                    boolean isAccountNonExpired,
-                    boolean isAccountNonLocked,
-                    boolean isCredentialsNonExpired,
-                    boolean isEnabled) {
+                    String password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        System.out.println("ROLE_" + this.role.name());
+        return Set.of(new SimpleGrantedAuthority("ROLE_" + this.role.name()));
     }
 
     @Override

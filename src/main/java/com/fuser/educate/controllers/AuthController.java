@@ -25,6 +25,8 @@ public class AuthController {
         return "login";
     }
 
+
+
     @GetMapping("/registration")
     public String getRegistration(){
         return "registration";

@@ -48,4 +48,6 @@ public class MainUserService implements UserDetailsService{
                 .orElseThrow(() ->
                         new BadCredentialsException(String.format(" Невірний логін(%s). ", email)));
     }
+
+
 }
